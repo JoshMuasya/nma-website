@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.hero-background {
+    background-image: url('../public/landingblur.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
