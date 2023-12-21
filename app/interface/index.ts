@@ -10,4 +10,5 @@ export interface ServiceCardType {
     title: string;
     content: string;
     link: string;
+    cardClass: string;
 }
