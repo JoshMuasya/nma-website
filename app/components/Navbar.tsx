@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className='fixed top-0 left-0 h-fit w-full z-50 font-poppins font-bold text-lg text-base-content'>
         {/* Displayed on screens below 1024px */}
-        <div className='lg:hidden flex flex-row justify-between px-20 py-10'>
+        <div className='lg:hidden flex flex-row justify-between px-10 py-10'>
             {/* Logo */}
             <div>
                 Logo
@@ -98,7 +98,7 @@ const Navbar = () => {
 
         {/* Drawer */}
         {isDrawerOpen && (
-            <div className='lg:hidden z-10 bg-neutral-content fixed right-0 top-0 w-2/5 h-full flex flex-col justify-center align-middle items-center'>
+            <div className='lg:hidden z-10 bg-neutral-content fixed right-0 top-0 w-full h-full flex flex-col justify-center align-middle items-center'>
                 {/* Menus */}
                 <div className='flex flex-col justify-around align-middle items-center h-1/3 '>
                     <Links
