@@ -1,17 +1,88 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Links from '../components/Links'
 import ServiceCard from '../components/ServiceCard'
 import ProgressBar from '../components/ProgressBar'
 import Link from 'next/link'
+import servicesData from '../data/servicesData'
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import EastIcon from '@mui/icons-material/East';
+import NorthEastIcon from '@mui/icons-material/NorthEast';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 const Home = () => {
+
+    const [isHover, setIsHover] = useState(false);
+    const [isAboutHover, setIsAboutHover] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const [currentItem, setCurrentItem] = useState(1);
+    const totalItems = servicesData.length
+
+    const startIndex = (currentItem - 1) % totalItems
+    const endIndex = (startIndex + 3) % totalItems
+
+    const visibleItems = getVisibleItems(startIndex, endIndex)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 100);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
+
+    const scrollTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    };
+
+    function getVisibleItems(start: number, end: number) {
+        if (end >= start) {
+            return servicesData.slice(start, end)
+        } else {
+            return [...servicesData.slice(start), ...servicesData.slice(0, end)]
+        }
+    }
+
+    const handleNext = () => {
+        setCurrentItem((prevItem) => (prevItem % 10) + 1);
+    };
+
+    const handlePrev = () => {
+        setCurrentItem((prevItem) => (prevItem - 2 + 10) % 10 + 1);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHover(false);
+    };
+
+    const handleMouseEnter = () => {
+        setIsHover(true);
+    };
+
+    const handleAboutMouseLeave = () => {
+        setIsAboutHover(false);
+    };
+
+    const handleAboutMouseEnter = () => {
+        setIsAboutHover(true);
+    };
+
     return (
         <div>
             <div className='h-fit hero-background relative flex flex-col justify-center align-middle'>
@@ -26,12 +97,20 @@ const Home = () => {
                     </div>
 
                     {/* Buttons */}
-                    <div className='pt-5'>
+                    <div
+                        className='mt-5 bg-primary w-fit h-fit rounded-lg px-3 pt-1 pb-3 flex flex-row justify-center align-middle items-center transition-all duration-300 ease-in-out'
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
                         <Links
                             href=''
                             title='Expertise'
-                            linkClass='text-5xl font-pre'
+                            linkClass='text-4xl font-pre'
                         />
+
+                        {isHover ?
+                            <NorthEastIcon className='pl-3 pt-1 text-5xl' />
+                            : <EastIcon className='pl-3 pt-1 text-5xl' />}
                     </div>
                 </div>
 
@@ -51,11 +130,21 @@ const Home = () => {
                             </div>
 
                             {/* Button */}
-                            <Links
-                                href=''
-                                title='Read More'
-                                linkClass=''
-                            />
+                            <div
+                                className='mt-5 bg-primary w-fit h-fit rounded-lg px-3 pt-1 pb-3 flex flex-row justify-center align-middle items-center transition-all duration-300 ease-in-out'
+                                onMouseEnter={handleAboutMouseEnter}
+                                onMouseLeave={handleAboutMouseLeave}
+                            >
+                                <Links
+                                    href=''
+                                    title='Read More'
+                                    linkClass='text-4xl font-pre'
+                                />
+
+                                {isAboutHover ?
+                                    <NorthEastIcon className='pl-3 pt-1 text-5xl' />
+                                    : <EastIcon className='pl-3 pt-1 text-5xl' />}
+                            </div>
                         </div>
 
                         {/* Right */}
@@ -117,79 +206,10 @@ const Home = () => {
                 </div>
 
                 {/* Card */}
-                <div className='flex flex-row justify-center align-middle items-center px-20 pb-16'>
-                    <div className="carousel carousel-center rounded-box">
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass='pl-6'
-                            />
-                        </div>
-                        <div className="carousel-item">
-                            <ServiceCard
-                                source=''
-                                alt=''
-                                title=''
-                                content=''
-                                link=''
-                                cardClass=''
-                            />
-                        </div>
-                    </div>
+                <div className='flex flex-row justify-center p-5'>
+                    {visibleItems.map((item, index) => (
+                        <ServiceCard key={index} {...item} />
+                    ))}
                 </div>
 
                 {/* Progess Bar, Action Button, Counter */}
@@ -197,39 +217,39 @@ const Home = () => {
                     {/* Action Button, Counter */}
                     <div className='flex flex-row justify-between align-middle px-10'>
                         {/* Counter */}
-                        <div className='text-6xl'>
-                            1/10
+                        <div className='text-5xl lg:text-6xl'>
+                            {currentItem}/{totalItems}
                         </div>
 
                         {/* Action Button */}
-                        <div className='flex flex-row justify-center align-middle'> 
+                        <div className='flex flex-row justify-center align-middle'>
                             {/* Left */}
                             <div className='border-4 p-3 rounded-full border-base-content w-fit'>
-                                <Link
-                                    href=''
+                                <button
+                                    onClick={handlePrev}
                                 >
-                                    <ArrowBackIcon 
-                                        className='text-4xl'
+                                    <ArrowBackIcon
+                                        className='text-2xl lg:text-4xl'
                                     />
-                                </Link>
+                                </button>
                             </div>
 
                             {/* Right */}
                             <div className='border-4 p-3 rounded-full border-base-content w-fit ml-3'>
-                                <Link
-                                    href=''
+                                <button
+                                    onClick={handleNext}
                                 >
-                                    <ArrowForwardIcon 
-                                        className='text-4xl'
+                                    <ArrowForwardIcon
+                                        className='text-2xl lg:text-4xl'
                                     />
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     {/* Progress Bar */}
                     <div className='px-10 pb-16 pt-8'>
-                        <ProgressBar />
+                        <ProgressBar currentItem={currentItem} />
                     </div>
                 </div>
             </div>
@@ -251,28 +271,30 @@ const Home = () => {
                         </div>
 
                         {/* Form */}
-                        <form 
+                        <form
                             action=""
                             className='flex flex-col justify-center align-middle'
                         >
-                            <input 
-                                type="text" 
-                                placeholder="Name" 
-                                className="input input-bordered w-full max-w-xs mb-3" 
+                            <input
+                                type="text"
+                                placeholder="Name"
+                                className="input input-bordered w-full max-w-xs mb-3"
                             />
 
-                            <input 
-                                type="text" 
-                                placeholder="email" 
-                                className="input input-bordered w-full max-w-xs mb-3" 
+                            <input
+                                type="text"
+                                placeholder="email"
+                                className="input input-bordered w-full max-w-xs mb-3"
                             />
 
-                            <textarea 
-                                className="textarea textarea-bordered w-full max-w-xs mb-3" 
+                            <textarea
+                                className="textarea textarea-bordered w-full max-w-xs mb-3"
                                 placeholder="Message"
                             ></textarea>
 
-                            <button>
+                            <button
+                                className='mt-5 bg-primary w-fit h-fit rounded-lg px-3 pt-1 pb-3 transition-all duration-300 ease-in-out'
+                            >
                                 Submit
                             </button>
                         </form>
@@ -317,6 +339,16 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Floating icon for scrolling to the top */}
+            {isScrolled && (
+                <div
+                    className="fixed bottom-4 right-4 bg-primary p-3 rounded-full cursor-pointer"
+                    onClick={scrollTop}
+                >
+                    <ArrowCircleUpIcon className="" />
+                </div>
+            )}
         </div>
     )
 }

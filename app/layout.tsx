@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html 
       lang="en"
-      data-theme = 'cupcake'
+      data-theme = 'corporate'
     >
       <body className=''>{children}</body>
     </html>

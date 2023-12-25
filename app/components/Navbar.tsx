@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Links from './Links'
 import Link from 'next/link';
 
@@ -12,13 +12,33 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const Navbar = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+
+    const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
+
+        setVisible(
+            (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
+        );
+
+        setPrevScrollPos(currentScrollPos);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPos, visible])
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     }
 
   return (
-    <nav className='fixed top-0 left-0 h-fit w-full z-50 font-poppins font-bold text-lg text-base-content'>
+    <nav className={`fixed top-0 left-0 h-fit w-full z-50 font-poppins font-bold text-lg text-base-content transition-all ${visible ? 'transform translate-y-0 opacity-100' : 'transform -translate-y-full opacity-0'}`}>
         {/* Displayed on screens below 1024px */}
         <div className='lg:hidden flex flex-row justify-between px-10 py-10'>
             {/* Logo */}

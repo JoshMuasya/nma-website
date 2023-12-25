@@ -11,8 +11,8 @@ export interface ServiceCardType {
     content: string;
     link: string;
     cardClass: string;
-<<<<<<< HEAD
 }
-=======
+
+export interface ProgressBarType {
+    currentItem: number;
 }
->>>>>>> fb8c8161a4875c4dc3de0cc25680e322bec58688

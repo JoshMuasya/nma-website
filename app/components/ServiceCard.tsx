@@ -3,7 +3,7 @@ import { ServiceCardType } from '../interface'
 
 const ServiceCard = ({ source, alt, title, content, link, cardClass }: ServiceCardType) => {
   return (
-    <div className={`${cardClass}`}>
+    <div className={`${cardClass} p-5`}>
         <div className="card w-96 bg-base-100 shadow-xl image-full">
             <figure>
                 <img src={source} alt={alt} />
